@@ -84,8 +84,27 @@ const thoughtController = {
             .catch((err) => {
                 console.log(err);
                 res.status(500).json(err);
-            })
-    }
+            });
+    },
+
+    //add a reaction to a thought by id
+    addReaction(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: params.thoughtId },
+            { $push: { reactions: body } },
+            { new: true }
+        )
+        .then((dbThoughtData) => {
+            if(!dbThoughtData){
+                res.status(404).json({ message: 'No thought found with this Id'});
+            }
+            res.json(dbThoughtData);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
+    },
 }
 
 module.exports = thoughtController;
