@@ -104,7 +104,25 @@ const thoughtController = {
             console.log(err);
             res.status(500).json(err);
           });
+    },  
+    // remove reaction from thought
+    removeReaction(req, res) {
+        Thought.findByIdAndUpdate(
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: {reactionId: req.params.reactionId } } },
+            { new: true }
+        )
+        .then((dbThoughtData) => {
+            if(!dbThoughtData) {
+                return res.status(404).json({ message: 'No thought found with this Id'});
+            }
+            res.json(dbThoughtData);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
     },
-}
+};
 
 module.exports = thoughtController;
