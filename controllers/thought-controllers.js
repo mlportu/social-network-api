@@ -32,7 +32,7 @@ const thoughtController = {
         Thought.create(req.body)
             .then((dbThoughtData) => {
                 return User.findOneAndUpdate(
-                    { _id: params.userId },
+                    { _id: req.params.userId },
                     { $push: { thoughts: dbThoughtData._id } },
                     { new: true }
                 );
@@ -64,14 +64,14 @@ const thoughtController = {
     },
     //remove thought by id
     deleteThought(req, res) {
-        Thought.findByIdAndRemove({ _id: req.params.id })
+        Thought.findByIdAndRemove({ _id: req.params.thoughtId })
             .then((dbThoughtData) => {
                 if(!dbThoughtData) {
                     return res.status(404).json({message: 'no thought with this id'});
                 }
                 return User.findOneAndUpdate(
-                    { _id: params.userId },
-                    { $pull: { thoughts: dbThoughtData._id } },
+                    { thoughts: req.params.thoughtId },
+                    { $pull: { thoughts: dbThoughtData.thoughtId } },
                     { new: true }
                 );
             })
