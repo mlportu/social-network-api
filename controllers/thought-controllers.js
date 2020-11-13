@@ -90,13 +90,13 @@ const thoughtController = {
     //add a reaction to a thought by id
     addReaction(req, res) {
         Thought.findOneAndUpdate(
-            { _id: params.thoughtId },
-            { $push: { reactions: body } },
+            { _id: req.params.thoughtId },
+            { $addToSet: { reactions: req.body } },
             { new: true }
         )
         .then((dbThoughtData) => {
             if(!dbThoughtData){
-                res.status(404).json({ message: 'No thought found with this Id'});
+                return res.status(404).json({ message: 'No thought found with this Id'});
             }
             res.json(dbThoughtData);
         })
