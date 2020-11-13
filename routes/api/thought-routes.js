@@ -12,10 +12,7 @@ const {
 router.route('/').get(getThoughts).post(createThought)
 
 // /api/thoughts/thoughtId
-router.route('/').get(getSingleThought).put(updateThought);
+router.route('/:thoughtId').get(getSingleThought).put(updateThought).delete(deleteThought);;
 
-
-// /api/thoughts/userId/thoughtId
-router.route('/:userId/:thoughtId').delete(deleteThought);
 
 module.exports = router;
