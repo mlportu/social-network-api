@@ -13,7 +13,7 @@ const userController = {
             });
     },
     getSingleUser(req, res) {
-        User.findOne({ _id: req.params.userId })
+        User.findOne({ _id: req.params.id })
           .then((dbUserData) => {
               //if no user with this id
             if (!dbUserData) {
@@ -39,7 +39,7 @@ const userController = {
       },
       //update user by id
       updateUser(req, res) {
-          User.findByIdAndUpdate({ _id: req.params.id}, body, {new:true})
+          User.findByIdAndUpdate({ _id: req.params.id}, {$set: req.body}, {new:true})
           .then(dbUserData => {
               if(!dbUserData) {
                   res.json(404).json({message: 'No user found with this id'});
@@ -54,18 +54,18 @@ const userController = {
       },
       // detele user 
       deleteUser(req, res) {
-          User.findByIdAndDelete({_id: params.id})
-          .then(dbUserData => {
-              if(!dbUserData){
-                  res.ststus(404).json({message:'No user found with this id'});
-                  return;
-              }
-              res.json(dbUserData);
-          })
-          .catch((err) => {
-            console.log(err);
-            res.status(500).json(err);          
-          });
+        User.findByIdAndDelete({_id: req.params.id})
+        .then(dbUserData => {
+            if(!dbUserData){
+                res.status(404).json({message:'No user found with this id'});
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).json(err);          
+        });
       }
 };
 
