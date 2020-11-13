@@ -18,6 +18,10 @@ const userController = {
     },
     getSingleUser(req, res) {
         User.findOne({ _id: req.params.id })
+          .populate({
+              path: 'thoughts',
+              select: '-__v'
+          })
           .then((dbUserData) => {
               //if no user with this id
             if (!dbUserData) {

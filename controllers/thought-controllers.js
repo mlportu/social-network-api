@@ -32,14 +32,14 @@ const thoughtController = {
         Thought.create(req.body)
             .then((dbThoughtData) => {
                 return User.findOneAndUpdate(
-                    { _id: req.params.userId },
+                    { _id: req.body.userId },
                     { $push: { thoughts: dbThoughtData._id } },
                     { new: true }
                 );
             })
             .then((dbUserData) => {
                 if(!dbUserData) {
-                    return res.status(404).json({message: 'no thought with this id'});
+                    return res.status(404).json({message: 'No user with this ID but thought created'});
                 }
                 res.json({ message: 'Thought added successfully' });
             })

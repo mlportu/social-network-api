@@ -8,9 +8,14 @@ const {
 } = require('../../controllers/thought-controllers');
 
 
-// /api/thoughts/userId
-router.route('/:userId').get(getThoughts).post(createThought);
+// /api/thoughts
+router.route('/').get(getThoughts).post(createThought)
 
-router.route('/:userId/:thoughtId').get(getSingleThought).put(updateThought).delete(deleteThought);
+// /api/thoughts/thoughtId
+router.route('/').get(getSingleThought).put(updateThought);
+
+
+// /api/thoughts/userId/thoughtId
+router.route('/:userId/:thoughtId').delete(deleteThought);
 
 module.exports = router;
