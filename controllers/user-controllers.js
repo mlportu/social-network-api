@@ -8,6 +8,9 @@ const userController = {
               path: 'thoughts',
               select: '-__v'
             })
+            .populate({
+              path: 'friends'
+            })
             .then((dbUserData) => {
                 res.json(dbUserData);
             })
@@ -21,6 +24,9 @@ const userController = {
           .populate({
               path: 'thoughts',
               select: '-__v'
+          })
+          .populate({
+            path: 'friends'
           })
           .then((dbUserData) => {
               //if no user with this id
