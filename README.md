@@ -1,7 +1,5 @@
 # social-network-api
 
-# Work Day Scheduler Starter Code
-
 ## Purpose
 This api is built for users to create and share their thoughts with friends and exchange reactions about thoughts other share while building a broader network of friends. 
 
